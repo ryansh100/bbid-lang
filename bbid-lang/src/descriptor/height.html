@@ -1,0 +1,27 @@
+<template>
+  <h2>Height</h2>
+  <p>
+    What is height? In the most upright, position what is the pieces' height in
+    nearest millimeters.
+  </p>
+  <p>
+    <div class="ui right labeled fluid input">
+      <div class="ui label">
+        Height
+      </div>
+      <input value.bind="heightMm & debounce:500" step="2" type="number" placeholder="The upright height in mm of the piece.">
+      <div class="ui basic label">
+        mm
+      </div>
+    </div>
+  </p>
+  <h3>Example</h3>
+  <p>
+    The following has a height of 12mm. The standard height of a brick is approximately 12mm.
+  </p>
+  <descriptor-navigation
+    next-text="Hinges"
+    next-route="#/hinge"
+    prev-text="Studs"
+    prev-route="#/studs"></descriptor-navigation>
+</template>

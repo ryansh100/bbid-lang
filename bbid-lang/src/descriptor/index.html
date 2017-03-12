@@ -1,0 +1,15 @@
+<template>
+  <div class="ui top attached menu">
+    <div class="ui breadcrumb item">
+      <a class="section" href="#/"><i class="settings icon"></i> Attributes</a>
+      <div class="divider" if.bind="navigatingTo"> / </div>
+      <div class="active section" if.bind="navigatingTo">${navigatingTo.title}</div>
+    </div>
+    <button if.bind="!navigatingTo" class="ui red icon button item" click.delegate="clearAttributes()">
+      Clear All
+    </button>
+  </div>
+  <div class="ui bottom attached segment">
+    <router-view></router-view>
+  </div>
+</template>

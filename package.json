@@ -1,0 +1,28 @@
+{
+  "name": "bbid-lang",
+  "version": "1.0.0",
+  "description": "Building Blcok Identification Language",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryansh100/bbid-lang.git"
+  },
+  "keywords": [
+    "lego",
+    "bbid",
+    "building",
+    "block"
+  ],
+  "author": "Ryan Hafer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryansh100/bbid-lang/issues"
+  },
+  "homepage": "https://github.com/ryansh100/bbid-lang#readme",
+  "dependencies": {
+    "semantic-ui": "^2.2.7"
+  }
+}

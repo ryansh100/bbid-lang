@@ -1,0 +1,61 @@
+<template>
+  <require from="./elements/pin-socket-arrangement.html"></require>
+  <h2>Pin Sockets</h2>
+  <p>Pins sockets are the receiving part of a piece to connect with pinSockets.</p>
+  <div class="ui top attached segment" if.bind="pinSocket0.show">
+    <pin-socket-arrangement arrangement.bind="pinSocket0" on-change.bind="changeCallback" index.bind="0"></pin-socket-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!pinSocket1.show">
+    <button class="ui button item" click.delegate="pinSocket1.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="pinSocket1.show">
+    <pin-socket-arrangement arrangement.bind="pinSocket1" on-change.bind="changeCallback" index.bind="1"></pin-socket-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!pinSocket2.show && pinSocket1.show">
+    <button class="ui button item" click.delegate="pinSocket2.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+    <button class="ui button red item" click.delegate="removeSide(pinSocket1)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="pinSocket2.show">
+    <pin-socket-arrangement arrangement.bind="pinSocket2" on-change.bind="changeCallback" index.bind="2"></pin-socket-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!pinSocket3.show && pinSocket2.show">
+    <button class="ui button item" click.delegate="pinSocket3.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+    <button class="ui button red item" click.delegate="removeSide(pinSocket2)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="pinSocket3.show">
+    <pin-socket-arrangement arrangement.bind="pinSocket3" on-change.bind="changeCallback" index.bind="3"></pin-socket-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="pinSocket3.show">
+    <button class="ui button red item" click.delegate="removeSide(pinSocket3)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <h3>
+    Examples
+  </h3>
+  <descriptor-navigation
+    prev-text="Pins"
+    prev-route="#/pins"
+    next-text="Clip Bars"
+    next-route="#/bars"></descriptor-navigation>
+</template>

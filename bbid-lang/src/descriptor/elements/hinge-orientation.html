@@ -1,0 +1,30 @@
+<template bindable="hinge,index,onChange">
+  <h3>Hinge ${index+1}</h3>
+  <p>
+    <div class="ui small header">Orientation</div>
+    <div class="ui input labeled fluid">
+      <select change.delegate="onChange()" value.bind="hinge.orientation" class="ui selection dropdown">
+        <option value="">Select An Orientation</option>
+        <option value="0">None</option>
+        <option value="1">Horizontal</option>
+        <option value="2">Vertical</option>
+        <option value="3">Both</option>
+      </select>
+    </div>
+  </p>
+  <p>
+    <div class="ui small header">Style</div>
+    <div class="ui input labeled fluid">
+      <select change.delegate="onChange()" value.bind="hinge.type" class="ui selection dropdown">
+        <option value="">Select A Style</option>
+        <option value="0">None</option>
+        <option value="1">Ridge</option>
+        <option value="2">Narrow Finger</option>
+        <option value="3">Wide Finger</option>
+        <option value="4">1 x 2 Brick Hinge</option>
+        <option value="5">Long Pin</option>
+        <option value="6">Short Pin</option>
+      </select>
+    </div>
+  </p>
+</template>

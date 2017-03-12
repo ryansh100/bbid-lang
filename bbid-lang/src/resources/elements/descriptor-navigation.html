@@ -1,0 +1,19 @@
+<template bindable="prevText,prevRoute,nextText,nextRoute">
+  <div class="ui divider"></div>
+  <div class="ui secondary menu">
+    <div class="item" if.bind="prevText">
+      <a href="${prevRoute}" class="ui left labeled icon button">
+        <i class="left arrow icon"></i>
+        ${prevText}
+      </a>
+    </div>
+    <div class="right menu">
+      <div class="item" if.bind="nextText">
+        <a href="${nextRoute}" class="ui right labeled icon button">
+          <i class="right arrow icon"></i>
+          ${nextText}
+        </a>
+      </div>
+    </div>
+  </div>
+</template>

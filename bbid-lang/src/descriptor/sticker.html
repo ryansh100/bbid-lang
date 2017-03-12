@@ -1,0 +1,37 @@
+<template>
+  <h2>Sticker</h2>
+  <p>
+    Represents the size of any stickers in mm.
+  </p>
+  <p>
+    <div class="ui right labeled fluid input">
+      <div class="ui label">
+        Min
+      </div>
+      <input value.bind="stickerMinMm" step="2" type="number" placeholder="A minimum measurement to nearest 2mm.">
+      <div class="ui basic label">
+        mm
+      </div>
+    </div>
+  </p>
+  <p>
+    <div class="ui right labeled fluid input">
+      <div class="ui label">
+        Max
+      </div>
+      <input value.bind="stickerMaxMm" step="2" type="number" placeholder="A maximum measurement to nearest 2mm.">
+      <div class="ui basic label">
+        mm
+      </div>
+    </div>
+  </p>
+  <h3>Example</h3>
+  <p>
+
+  </p>
+  <descriptor-navigation
+    next-text="Colors"
+    next-route="#/colors"
+    prev-text="Printed"
+    prev-route="#/printed"></descriptor-navigation>
+</template>

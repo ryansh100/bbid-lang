@@ -1,0 +1,58 @@
+<template>
+  <require from="./elements/bar-arrangement.html"></require>
+  <h2>Clip Bars</h2>
+  <p>Clips bar features are round bars that a standard clip would connect to.</p>
+  <div class="ui top attached segment" if.bind="bar0.show">
+    <bar-arrangement arrangement.bind="bar0" on-change.bind="changeCallback" index.bind="0"></bar-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!bar1.show">
+    <button class="ui button item" click.delegate="bar1.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="bar1.show">
+    <bar-arrangement arrangement.bind="bar1" on-change.bind="changeCallback" index.bind="1"></bar-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!bar2.show && bar1.show">
+    <button class="ui button item" click.delegate="bar2.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+    <button class="ui button red item" click.delegate="removeSide(bar1)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="bar2.show">
+    <bar-arrangement arrangement.bind="bar2" on-change.bind="changeCallback" index.bind="2"></bar-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!bar3.show && bar2.show">
+    <button class="ui button item" click.delegate="bar3.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+    <button class="ui button red item" click.delegate="removeSide(bar2)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="bar3.show">
+    <bar-arrangement arrangement.bind="bar3" on-change.bind="changeCallback" index.bind="3"></bar-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="bar3.show">
+    <button class="ui button red item" click.delegate="removeSide(bar3)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <descriptor-navigation
+    prev-text="Pin Sockets"
+    prev-route="#/pin-sockets"
+    next-text="Bar Sleeves"
+    next-route="#/sleeves"></descriptor-navigation>
+</template>

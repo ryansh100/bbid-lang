@@ -1,0 +1,58 @@
+<template>
+  <require from="./elements/clip-arrangement.html"></require>
+  <h2>Clips</h2>
+  <p>Clips can hold onto the standard width bar used for many minifigure utensils.</p>
+  <div class="ui top attached segment" if.bind="clip0.show">
+    <clip-arrangement arrangement.bind="clip0" on-change.bind="changeCallback" index.bind="0"></clip-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!clip1.show">
+    <button class="ui button item" click.delegate="clip1.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="clip1.show">
+    <clip-arrangement arrangement.bind="clip1" on-change.bind="changeCallback" index.bind="1"></clip-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!clip2.show && clip1.show">
+    <button class="ui button item" click.delegate="clip2.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+    <button class="ui button red item" click.delegate="removeSide(clip1)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="clip2.show">
+    <clip-arrangement arrangement.bind="clip2" on-change.bind="changeCallback" index.bind="2"></clip-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!clip3.show && clip2.show">
+    <button class="ui button item" click.delegate="clip3.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+    <button class="ui button red item" click.delegate="removeSide(clip2)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="clip3.show">
+    <clip-arrangement arrangement.bind="clip3" on-change.bind="changeCallback" index.bind="3"></clip-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="clip3.show">
+    <button class="ui button red item" click.delegate="removeSide(clip3)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <descriptor-navigation
+    prev-text="Sockets"
+    prev-route="#/sockets"
+    next-text="Axle Sockets"
+    next-route="#/axle-sockets"></descriptor-navigation>
+</template>

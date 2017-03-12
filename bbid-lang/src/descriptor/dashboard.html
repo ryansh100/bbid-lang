@@ -1,0 +1,297 @@
+<template>
+  <div class="ui eight doubling cards">
+      <div class="ui card">
+        <div class="ui content center aligned">
+            <div class="header">Assembly</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.isAssembly == undefined">-</span>
+          <span if.bind="descriptor.isAssembly != undefined">
+            ${descriptor.isAssembly ? 'Yes' : 'No'}
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('assembly')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Studs</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.studOrientations == undefined">-</span>
+          <span if.bind="descriptor.studOrientations != undefined">
+            Max / Min / Total.
+            <div class="ui list divided">
+              <div class="item" repeat.for="o of descriptor.studOrientations"  if.bind="o | hasValuesFor:'min':'max':'adjustment'">
+                ${o.max} / ${o.min} / ${o.min* o.max - o.adjustment}
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('studs')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Height</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.height == undefined">-</span>
+          <span if.bind="descriptor.height != undefined">
+            <div class="header">${descriptor.height * 2} mm</div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('height')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Hinges</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.hinges == undefined">-</span>
+          <span if.bind="descriptor.hinges != undefined">
+            Orientation / Type.
+            <div class="ui list divided">
+              <div class="item" repeat.for="h of descriptor.hinges"  if.bind="h | hasValuesFor:'orientation':'type'">
+                ${h.orientation | toHingeOrientation} / ${h.type | toHingeType}
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('hinge')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Stud Sockets</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.sockets == undefined">-</span>
+          <span if.bind="descriptor.sockets != undefined">
+            Max / Min / Total.
+            <div class="ui list divided">
+              <div class="item" repeat.for="s of descriptor.sockets"  if.bind="s | hasValuesFor:'min':'max':'adjustment'">
+                ${s.max} / ${s.min} / ${s.min* s.max - s.adjustment}
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('sockets')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Clips</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.clips == undefined">-</span>
+          <span if.bind="descriptor.clips != undefined">
+            <div class="ui list divided">
+              <div class="item" repeat.for="c of descriptor.clips"  if.bind="c | hasValuesFor:'count'">
+                ${c.count}
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('clips')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Axle Sockets</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.axleSockets == undefined">-</span>
+          <span if.bind="descriptor.axleSockets != undefined">
+            <div class="header">${descriptor.axleSockets}</div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('axle-sockets')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Axles</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.axles == undefined">-</span>
+          <span if.bind="descriptor.axles != undefined">
+            <div class="ui list divided">
+              <div class="item" repeat.for="a of descriptor.axles"  if.bind="a | hasValuesFor:'lengthUnit'">
+                ${a.lengthUnit * 8} mm
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('axles')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Pins</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.pins == undefined">-</span>
+          <span if.bind="descriptor.pins != undefined">
+            <div class="ui list divided">
+              Length / Count
+              <div class="item" repeat.for="p of descriptor.pins"  if.bind="p | hasValuesFor:'count':'lengthUnit'">
+                ${p.lengthUnit * 8} mm / ${p.count}
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('pins')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Pin Sockets</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.pinSockets == undefined">-</span>
+          <span if.bind="descriptor.pinSockets != undefined">
+            <div class="ui list divided">
+              <div class="item" repeat.for="p of descriptor.pinSockets"  if.bind="p | hasValuesFor:'count'">
+                ${p.count}
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('pin-sockets')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Bars</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.bars == undefined">-</span>
+          <span if.bind="descriptor.bars != undefined">
+            <div class="ui list divided">
+              <div class="item" repeat.for="i of descriptor.bars"  if.bind="i | hasValuesFor:'count'">
+                ${i.count}
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('bars')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Bar Sleeves</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.sleeves == undefined">-</span>
+          <span if.bind="descriptor.sleeves != undefined">
+            <div class="ui list divided">
+              <div class="item" repeat.for="i of descriptor.sleeves"  if.bind="i | hasValuesFor:'count'">
+                ${i.count}
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('sleeves')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Mini Bar</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.isMiniBar == undefined">-</span>
+          <span if.bind="descriptor.isMiniBar != undefined">
+            <div class="ui header">
+              ${descriptor.isMiniBar ? 'Yes' : 'No'}
+            </div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('mini-bar')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Colors</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.colors == undefined">-</span>
+          <span if.bind="descriptor.colors != undefined">
+            <div class="ui list divided">
+              <div class="item" repeat.for="i of descriptor.colors"  if.bind="i | hasValuesFor:'colorId'">
+                <i class="square icon" css="color: ${i.colorId | idToColorCss}"></i>
+                ${i.colorId | idToColorName}
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('colors')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Stickers</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.stickerMin == undefined">-</span>
+          <span if.bind="descriptor.stickerMin != undefined">
+            <div class="ui list divided">
+              Min / Max
+              <div class="ui list divided">
+                ${descriptor.stickerMin} / ${descriptor.stickerMax}
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('sticker')">
+          Edit
+        </div>
+      </div>
+
+      <div class="ui card">
+        <div class="ui content center aligned">
+          <div class="header">Printed</div>
+        </div>
+        <div class="ui content center aligned">
+          <span if.bind="descriptor.isPrinted == undefined">-</span>
+          <span if.bind="descriptor.isPrinted != undefined">
+            <div class="ui header">
+              ${descriptor.isPrinted ? 'Yes' : 'No'}
+            </div>
+          </span>
+        </div>
+        <div class="ui bottom attached button" click.delegate="router.navigate('printed')">
+          Edit
+        </div>
+      </div>
+  </div>
+</template>

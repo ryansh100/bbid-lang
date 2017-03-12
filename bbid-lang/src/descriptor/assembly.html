@@ -1,0 +1,10 @@
+<template>
+  <p>Is this piece an assembly of other pieces?</p>
+  <button click.delegate="toggleAssembly()" class="ui labeled icon button ${isAssembly ? 'primary': 'basic'}">
+    <i class="toggle ${isAssembly ? 'on' : 'off'} icon"></i> ${ isAssembly ? 'Yes': 'No'}
+  </button>
+  <h3>Examples</h3>
+  <descriptor-navigation
+    next-text="Studs"
+    next-route="#/studs"></descriptor-navigation>
+</template>

@@ -1,0 +1,61 @@
+<template>
+  <require from="./elements/axle-arrangement.html"></require>
+  <h2>Axles</h2>
+  <p>Axles are a cross pattern pieces that are a given length. Measurements are rounded to the nearest 8mm's.</p>
+  <div class="ui top attached segment" if.bind="axle0.show">
+    <axle-arrangement arrangement.bind="axle0" on-change.bind="changeCallback" index.bind="0"></axle-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!axle1.show">
+    <button class="ui button item" click.delegate="axle1.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="axle1.show">
+    <axle-arrangement arrangement.bind="axle1" on-change.bind="changeCallback" index.bind="1"></axle-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!axle2.show && axle1.show">
+    <button class="ui button item" click.delegate="axle2.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+    <button class="ui button red item" click.delegate="removeSide(axle1)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="axle2.show">
+    <axle-arrangement arrangement.bind="axle2" on-change.bind="changeCallback" index.bind="2"></axle-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!axle3.show && axle2.show">
+    <button class="ui button item" click.delegate="axle3.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+    <button class="ui button red item" click.delegate="removeSide(axle2)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="axle3.show">
+    <axle-arrangement arrangement.bind="axle3" on-change.bind="changeCallback" index.bind="3"></axle-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="axle3.show">
+    <button class="ui button red item" click.delegate="removeSide(axle3)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <h3>
+    Examples
+  </h3>
+  <descriptor-navigation
+    prev-text="Axle Sockets"
+    prev-route="#/axle-sockets"
+    next-text="Pins"
+    next-route="#/pins"></descriptor-navigation>
+</template>

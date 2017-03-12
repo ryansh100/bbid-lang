@@ -1,0 +1,14 @@
+<template>
+  <h2>Mini Bar</h2>
+  <p>A mini bar is a very narrow bar that is typically associated with the feather or plume pieces.</p>
+  <p>Does this piece contain a mini bar?</p>
+  <button click.delegate="toggleMiniBar()" class="ui labeled icon button ${isMiniBar ? 'primary': 'basic'}">
+    <i class="toggle ${isMiniBar ? 'on' : 'off'} icon"></i> ${ isMiniBar ? 'Yes': 'No'}
+  </button>
+  <h3>Examples</h3>
+  <descriptor-navigation
+    prev-text="Bar Sleeves"
+    prev-route="#/sleeves"
+    next-text="Colors"
+    next-route="#/colors"></descriptor-navigation>
+</template>

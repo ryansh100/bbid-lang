@@ -1,0 +1,27 @@
+<template bindable="arrangement,index,onChange">
+  <h3>Side ${index+1}</h3>
+  <p>
+    <div class="ui input labeled fluid">
+      <div class="ui label">
+        Max
+      </div>
+      <input change.delegate="onChange()" value.bind="arrangement.max" step="1" type="number" placeholder="The maximum number of stud sockets in a single row.">
+    </div>
+  </p>
+  <p>
+    <div class="ui input labeled fluid">
+      <div class="ui label">
+        Min
+      </div>
+      <input change.delegate="onChange()" value.bind="arrangement.min" step="1" type="number" placeholder="The maximum number of stud sockets in a single row.">
+    </div>
+  </p>
+  <p>
+    <div class="ui input labeled fluid">
+      <div class="ui label">
+        Total
+      </div>
+      <input change.delegate="onChange()" value.bind="arrangement.total" step="1" type="number" placeholder="Total number of stud sockets on a side.">
+    </div>
+  </p>
+</template>

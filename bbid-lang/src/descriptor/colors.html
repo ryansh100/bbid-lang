@@ -1,0 +1,62 @@
+<template>
+  <require from="./elements/color-option.html"></require>
+  <h2>Colors</h2>
+  <p>There is a wide variety of colors that a piece could have.</p>
+  <div class="ui top attached segment" if.bind="color0.show">
+    <color-option option.bind="color0" on-change.bind="changeCallback" index.bind="0"></color-option>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!color1.show">
+    <button class="ui button item" click.delegate="color1.toggle()">
+      <i class="icon add"></i>
+      Add Color
+    </button>
+    <button class="ui button red item" click.delegate="clearColorId(color0)" if.bind="color0.colorId != ''">
+      <i class="icon remove"></i>
+      Remove Color
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="color1.show">
+    <color-option option.bind="color1" on-change.bind="changeCallback" index.bind="1"></color-option>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!color2.show && color1.show">
+    <button class="ui button item" click.delegate="color2.toggle()">
+      <i class="icon add"></i>
+      Add Color
+    </button>
+    <button class="ui button red item" click.delegate="removeColor(color1)">
+      <i class="icon remove"></i>
+      Remove Color
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="color2.show">
+    <color-option option.bind="color2" on-change.bind="changeCallback" index.bind="2"></color-option>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!color3.show && color2.show">
+    <button class="ui button item" click.delegate="color3.toggle()">
+      <i class="icon add"></i>
+      Add Color
+    </button>
+    <button class="ui button red item" click.delegate="removeColor(color2)">
+      <i class="icon remove"></i>
+      Remove Color
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="color3.show">
+    <color-option option.bind="color3" on-change.bind="changeCallback" index.bind="3"></color-option>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="color3.show">
+    <button class="ui button red item" click.delegate="removeColor(color3)">
+      <i class="icon remove"></i>
+      Remove Color
+    </button>
+  </div>
+  <descriptor-navigation
+    prev-text="Mini Bar"
+    prev-route="#/mini-bar"
+    next-text="Sticker"
+    next-route="#/sticker"></descriptor-navigation>
+</template>

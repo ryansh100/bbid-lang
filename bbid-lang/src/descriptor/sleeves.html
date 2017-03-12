@@ -1,0 +1,58 @@
+<template>
+  <require from="./elements/sleeve-arrangement.html"></require>
+  <h2>Bar Sleeves</h2>
+  <p>A bar sleeves features is a round opening of bar width that a clip bar can slide into or through.</p>
+  <div class="ui top attached segment" if.bind="sleeve0.show">
+    <sleeve-arrangement arrangement.bind="sleeve0" on-change.bind="changeCallback" index.bind="0"></sleeve-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!sleeve1.show">
+    <button class="ui button item" click.delegate="sleeve1.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="sleeve1.show">
+    <sleeve-arrangement arrangement.bind="sleeve1" on-change.bind="changeCallback" index.bind="1"></sleeve-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!sleeve2.show && sleeve1.show">
+    <button class="ui button item" click.delegate="sleeve2.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+    <button class="ui button red item" click.delegate="removeSide(sleeve1)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="sleeve2.show">
+    <sleeve-arrangement arrangement.bind="sleeve2" on-change.bind="changeCallback" index.bind="2"></sleeve-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!sleeve3.show && sleeve2.show">
+    <button class="ui button item" click.delegate="sleeve3.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+    <button class="ui button red item" click.delegate="removeSide(sleeve2)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="sleeve3.show">
+    <sleeve-arrangement arrangement.bind="sleeve3" on-change.bind="changeCallback" index.bind="3"></sleeve-arrangement>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="sleeve3.show">
+    <button class="ui button red item" click.delegate="removeSide(sleeve3)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <descriptor-navigation
+    prev-text="Clip Bars"
+    prev-route="#/bars"
+    next-text="Mini Bar"
+    next-route="#/mini-bar"></descriptor-navigation>
+</template>

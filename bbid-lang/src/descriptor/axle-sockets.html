@@ -1,0 +1,16 @@
+<template>
+  <p>Axle Sockets are receivers to pieces with cross axles.</p>
+  <p>
+    <div class="ui input labeled fluid">
+      <div class="ui label">
+        Count
+      </div>
+      <input change.delegate="updateAxles()" value.bind="axleSockets" step="1" type="number" placeholder="The number of sockets for axles.">
+    </div>
+  </p>
+  <descriptor-navigation
+    prev-text="Clips"
+    prev-route="#/clips"
+    next-text="Axles"
+    next-route="#/axles"></descriptor-navigation>
+</template>

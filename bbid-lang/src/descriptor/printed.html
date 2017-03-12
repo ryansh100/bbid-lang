@@ -1,0 +1,11 @@
+<template>
+  <h2>Printed</h2>
+  <p>Does this piece have printing on it?</p>
+  <button click.delegate="togglePrinted()" class="ui labeled icon button ${isPrinted ? 'primary': 'basic'}">
+    <i class="toggle ${isPrinted ? 'on' : 'off'} icon"></i> ${ isPrinted ? 'Yes': 'No'}
+  </button>
+  <h3>Examples</h3>
+  <descriptor-navigation
+    prev-text="Sticker"
+    prev-route="#/sticker"></descriptor-navigation>
+</template>

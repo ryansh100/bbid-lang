@@ -1,0 +1,43 @@
+<template bindable="option,index,onChange">
+  <h3>Color ${index+1}</h3>
+  <div if.bind="option.colorId != ''">
+    <div class="card">
+      <div class="ui content center aligned">
+        <h4 class="ui icon header">
+          <i class="square icon" css="color: ${option.colorId | idToColorCss}"></i>
+          <div class="content">
+            ${option.colorId | idToColorCommonName}
+            <div class="sub header">${option.colorId | idToColorName}</div>
+          </div>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div if.bind="option.colorId.length == 0">
+    <p>
+      <div class="ui small icon fluid input">
+        <input value.bind="option.searchTerm & debounce:750" type="text" placeholder="Search colors...">
+        <i class="search icon"></i>
+      </div>
+    </p>
+    <p if.bind="!options.searchMatches.length">
+      &nbsp;
+    </p>
+    <div class="ui eight doubling cards">
+      <div class="card" repeat.for="match of option.searchMatches">
+        <div class="ui content center aligned">
+          <h4 class="ui icon header">
+            <i class="square icon" css.bind="{color: match.css}"></i>
+            <div class="content">
+              ${match.common}
+              <div class="sub header">${match.name}</div>
+            </div>
+          </h4>
+        </div>
+        <div class="ui bottom attached center button" click.delegate="option.selectColor(match)">
+          Select
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

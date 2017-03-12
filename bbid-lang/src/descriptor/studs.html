@@ -1,0 +1,72 @@
+<template>
+  <require from="./elements/stud-face.html"></require>
+  <h2>Studs</h2>
+  <p>Studs are the round knobs that are commonly found on a building block's top.</p>
+  <div class="ui top attached segment" if.bind="orientation0.show">
+    <stud-face orientation.bind="orientation0" index.bind="0" on-change.bind="changeCallback"></stud-face>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!orientation1.show">
+    <button class="ui button item" click.delegate="orientation1.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="orientation1.show">
+    <stud-face orientation.bind="orientation1" index.bind="1" on-change.bind="changeCallback"></stud-face>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!orientation2.show && orientation1.show">
+    <button class="ui button item" click.delegate="orientation2.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+    <button class="ui button red item" click.delegate="removeOrientation(orientation1)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="orientation2.show">
+    <stud-face orientation.bind="orientation2" index.bind="2" on-change.bind="changeCallback"></stud-face>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!orientation3.show && orientation2.show">
+    <button class="ui button item" click.delegate="orientation3.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+    <button class="ui button red item" click.delegate="removeOrientation(orientation2)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="orientation3.show">
+    <stud-face orientation.bind="orientation3" index.bind="3" on-change.bind="changeCallback"></stud-face>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!orientation4.show && orientation3.show">
+    <button class="ui button item" click.delegate="orientation4.toggle()">
+      <i class="icon add"></i>
+      Add Side
+    </button>
+    <button class="ui button red item" click.delegate="removeOrientation(orientation3)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="orientation4.show">
+    <stud-face orientation.bind="orientation4" index.bind="4" on-change.bind="changeCallback"></stud-face>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="orientation4.show">
+    <button class="ui button red item" click.delegate="removeOrientation(orientation4)">
+      <i class="icon remove"></i>
+      Remove Side
+    </button>
+  </div>
+  <descriptor-navigation
+    prev-text="Assembly"
+    prev-route="#/assembly"
+    next-text="Height"
+    next-route="#/height"></descriptor-navigation>
+</template>

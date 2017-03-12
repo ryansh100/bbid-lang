@@ -1,0 +1,44 @@
+<template>
+  <require from="./elements/hinge-orientation.html"></require>
+  <h2>Hinges</h2>
+  <p>Hinges link together multiple pieces and can pivot in a direction.</p>
+  <div class="ui top attached segment" if.bind="hinge0.show">
+    <hinge-orientation hinge.bind="hinge0" on-change.bind="changeCallback" index.bind="0"></hinge-orientation>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!hinge1.show">
+    <button class="ui button item" click.delegate="hinge1.toggle()">
+      <i class="icon add"></i>
+      Add Hinge
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="hinge1.show">
+    <hinge-orientation hinge.bind="hinge1" on-change.bind="changeCallback" index.bind="1"></hinge-orientation>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="!hinge2.show && hinge1.show">
+    <button class="ui button item" click.delegate="hinge2.toggle()">
+      <i class="icon add"></i>
+      Add Hinge
+    </button>
+    <button class="ui button red item" click.delegate="removeOrientation(hinge1)">
+      <i class="icon remove"></i>
+      Remove Hinge
+    </button>
+  </div>
+  <div class="ui attached segment" if.bind="hinge2.show">
+    <hinge-orientation hinge.bind="hinge2" on-change.bind="changeCallback" index.bind="2"></hinge-orientation>
+  </div>
+
+  <div class="ui bottom attached menu" if.bind="hinge2.show">
+    <button class="ui button red item" click.delegate="removeOrientation(hinge2)">
+      <i class="icon remove"></i>
+      Remove Hinge
+    </button>
+  </div>
+  <descriptor-navigation
+    prev-text="Height"
+    prev-route="#/height"
+    next-text="Sockets"
+    next-route="#/sockets"></descriptor-navigation>
+</template>

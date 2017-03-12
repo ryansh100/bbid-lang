@@ -130,6 +130,13 @@ export class DescriptorIndex{
         name:     'descriptor-printed',
         moduleId: './printed',
         nav:       true
+      },
+      {
+        route:    'create',
+        title:    'Create New Piece',
+        name:     'create',
+        moduleId: '../create',
+        nav:       true
       }
     ];
   }

@@ -2,53 +2,53 @@
 
 This project's goal is to create a more descriptive, programmable and extensible way of describing building block parts such as LEGO&reg;.
 
-The system consists of descriptor assignments in a fixed length key. Available block assignments are tinyint, Int, Base64.
+The system consists of descriptor assignments in Radix64 blocks.
 
-The following could be represented as `10EC=============D=000000EC=================0====0000000000000000000C===========0===`
+The following could be represented as `0-13-------------5.----------13-----------------------------------------K-----`
 
 <img src="http://img.bricklink.com/ItemImage/PL/3001.png" />
 
-This might seem like overkill, but how do you systematically descibe elements that combine a variety of propertie more than studs and the ability to socket with other studs. Like clips, bars, technic-style axles, etc.
+This might seem like overkill, but how do you systematically describe elements that combine a variety of properties more than studs and the ability to socket with other studs? To for example clips, bars, technic-style axles, etc... Would you know what I mean when I say "Plade 1X2 M. Van. Hul Ø 4,8"? Most likely not.
+
+<img src="http://cache.lego.com/media/bricks/5/2/6019987.jpg" />
 
 ## The Spec Sheet
 
-| Attribute            | Description                                                                      | Type       | Sampe Value     |
-|----------------------|----------------------------------------------------------------------------------|------------|-----------------|
-| Brand                | Make of the part                                                                 | Int        | 1               |
-| Assembly             | Whether or not the part is a combination of other parts                          | Tinyint    | 0               |
-| Studs                | Represents a block of possible stud orientations, 5 blocks of stud configuration | Base64[15] | EC============= |
-| - Studs/Max          | Maximum length row of studs                                                      | Base64     | E               |
-| - Studs/Min          | Minimum length row of studs                                                      | Base64     | C               |
-| - Studs/Adjustment   | The amount of studs to subtract from min x max.                                  | Base61     | =               |
-| Height               | Increments of 2mm                                                                | Base64[2]  | D=              |
-| Hinges               | Representation of possible hinge orientations, Max 3 orientations                | Int   [8]  | 000000          |
-| - Hinges/Orientation | Vertical/Horizontal                                                              | Int        | 0               |
-| - Hinges/Type        | Hinge Type                                                                       | Int        | 0               |
-| Socket               | Represents possible stuck socket orientations, 5 blocks of stud configuration    | Mix[15]    | EC============= |
-| - Socket/Min         | Maximum length row of sockets                                                    | Base64     | C               |
-| - Socket/Max         | Minimum length row of sockets                                                    | Base64     | E               |
-| - Socket/Adjustment  | Adjustment to min x max                                                          | Base64     | =               |
-| Clips                | Representation of possible clip orientations, Max 4                              | Base64     | ====            |
-| - Clips/Count        | The number of clips                                                              | Base64     | =               |
-| Axle Sockets         | Number of axle sockets                                                           | Int        | 0               |
-| Axles                | Possible axle orientations, 4 possible                                           | Base64[4]  | ====            |
-| - Axles/Length       | The length of the axle in 8 mm increments                                        | Base64     | =               |
-| Pins                 | Possible Pin Orientations, 3 possible                                            | Number[6]  | 000000          |
-| - Pins/Length        | In increments of 8mm                                                             | Int        | 0               |
-| - Pins/Count         | Count of pins in orientation                                                     | Int        | 0               |
-| Pin Sockets          | Possible Pin Socket Orientations, 4 possible                                     | Int   [4]  | 0000            |
-| - Pin Sockets/Count  | Count of pin sockets                                                             | Int        | 0               |
-| Clip Bar             | Possible Clip bar orientations, 4 possible                                       | Int   [4]  | 0000            |
-| - Clip Bar/Count     | Number of bars that can be clipped                                               | Int        | 0               |
-| Sleeve               | Possible Bar Sleeve orientations, 4 maximum                                      | Int   [4]  | 0000            |
-| - Sleeve/Count       | Count of sleeve for a given orientation                                          | Int        | 0               |
-| Mini-Bar             | Whether or not it contains a mini Bar                                            | TinyInt    | 0               |
-| Colors               | Set of colors present, 4 possible                                                | Base64[8]  | ========        |
-| - Colors/color       | A color id                                                                       | Base64[2]  | ==              |
-| Sticker              | Represents                                                                       | Base64[4]  | ====            |
-| - Sticker/Min        | Minimum measurement in 2mm increments                                            | Base64[2]  | ==              |
-| - Sticker/Max        | Maximum measurement in 2mm increments                                            | Base64[2]  | ==              |
-| Printed              | Whether or not the part is printed on                                            | TinyInt    | 0               |
-| Modifier             | Unique Modifier to the part                                                      | Base64[3]  | ===             |
-|                      |                                                                                  |            |                 |
-|                      |                                                                                  |            |                 |
+| Attribute            | Description                                                                      | Type        | Sample Value    |
+|----------------------|----------------------------------------------------------------------------------|-------------|-----------------|
+| Brand                | Make of the part                                                                 | Radix64[1]  | -               |
+| Assembly             | Whether or not the part is a combination of other parts                          | Radix64[1]  | -               |
+| Studs                | Represents a block of possible stud orientations, 5 blocks of stud configuration | Radix64[15] | 13------------- |
+| - Studs/Max          | Maximum length row of studs                                                      | Radix64[1]  | 1               |
+| - Studs/Min          | Minimum length row of studs                                                      | Radix64[1]  | 3               |
+| - Studs/Adjustment   | The amount of studs to subtract from min x max.                                  | Radix64[1]  | -               |
+| Height               | Increments of 2mm                                                                | Radix64{1,2}| 5.              |
+| Hinges               | Representation of possible hinge orientations, Max 3 orientations                | Radix64[6]  | ------          |
+| - Hinges/Orientation | Vertical/Horizontal                                                              | Radix64[1]  | -               |
+| - Hinges/Type        | Hinge Type                                                                       | Radix64[1]  | -               |
+| Socket               | Represents possible stuck socket orientations, 5 blocks of stud configuration    | Radix64[15] | 013------------ |
+| - Socket/Min         | Maximum length row of sockets                                                    | Radix64[1]  | 1               |
+| - Socket/Max         | Minimum length row of sockets                                                    | Radix64[1]  | 3               |
+| - Socket/Adjustment  | Adjustment to min x max                                                          | Radix64[1]  | -               |
+| Clips                | Representation of possible clip orientations, Max 4                              | Radix64[4]  | ----            |
+| - Clips/Count        | The number of clips                                                              | Radix64[1]  | -               |
+| Axle Sockets         | Number of axle sockets                                                           | Radix64[1]  | -               |
+| Axles                | Possible axle orientations, 4 possible                                           | Radix64[4]  | ----            |
+| - Axles/Length       | The length of the axle in 8 mm increments                                        | Radix64[1]  | -               |
+| Pins                 | Possible Pin Orientations, 3 possible                                            | Radix64[6]  | ------          |
+| - Pins/Length        | In increments of 8mm                                                             | Radix64[1]  | -               |
+| - Pins/Count         | Count of pins in orientation                                                     | Radix64[1]  | -               |
+| Pin Sockets          | Possible Pin Socket Orientations, 4 possible                                     | Radix64[4]  | ----            |
+| - Pin Sockets/Count  | Count of pin sockets                                                             | Radix64[1]  | -               |
+| Clip Bar             | Possible Clip bar orientations, 4 possible                                       | Radix64[4]  | ----            |
+| - Clip Bar/Count     | Number of bars that can be clipped                                               | Radix64[1]  | -               |
+| Sleeve               | Possible Bar Sleeve orientations, 4 maximum                                      | Radix64[4]  | ----            |
+| - Sleeve/Count       | Count of sleeve for a given orientation                                          | Radix64[1]  | -               |
+| Mini-Bar             | Whether or not it contains a mini Bar                                            | Radix64[1]  | -               |
+| Colors               | Set of colors present, 4 possible                                                | Radix64[4]  | ----            |
+| - Colors/color       | A color id                                                                       | Radix64[1]  | -               |
+| Sticker              | Represents                                                                       | Radix64[4]  | --              |
+| - Sticker/Min        | Minimum measurement in 2mm increments                                            | Radix64[1]  | -               |
+| - Sticker/Max        | Maximum measurement in 2mm increments                                            | Radix64[1]  | -               |
+| Printed              | Whether or not the part is printed on                                            | Radix64[1]  | -               |
+| Modifier             | Unique Modifier to the part                                                      | Radix64{1,3}| -..             |

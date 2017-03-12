@@ -1,5 +1,5 @@
 <template>
-  <div class="ui text container" if.bind="bbid == '0-----------------.-------------------------------------------------------'">
+  <div class="ui container" if.bind="bbid == '0-----------------.-------------------------------------------------------'">
     <h1 class="ui header">What is BBID?</h1>
     <p>
       BBID/Building Blick Identification is a way to semantically describe LEGO
@@ -13,7 +13,7 @@
     </p>
   </div>
 
-  <div if.bind="bbid != '0-----------------.-------------------------------------------------------'">
+  <div class="ui container" if.bind="bbid != '0-----------------.-------------------------------------------------------'">
     <pre>${bbid}</pre>
     <canvas id="qr"></canvas>
   </div>

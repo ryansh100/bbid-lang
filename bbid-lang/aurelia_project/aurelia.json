@@ -93,13 +93,15 @@
           "node_modules/bluebird/js/browser/bluebird.core.js",
           "node_modules/aurelia-cli/lib/resources/scripts/configure-bluebird.js",
           "node_modules/requirejs/require.js",
-          "node_modules/qrious/dist/umd/qrious.js"
+          "node_modules/qrious/dist/umd/qrious.js",
+          "node_modules/whatwg-fetch/fetch.js"
         ],
         "dependencies": [
           "aurelia-binding",
           "aurelia-bootstrapper",
           "aurelia-dependency-injection",
           "aurelia-event-aggregator",
+          "aurelia-fetch-client",
           "aurelia-framework",
           "aurelia-history",
           "aurelia-history-browser",

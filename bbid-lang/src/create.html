@@ -1,0 +1,30 @@
+<template>
+  <div class="container">
+    <p>
+      <div class="ui labeled input">
+        <div class="ui label">
+          LEGO Element ID
+        </div>
+        <input value.bind="elementId" type="number" step="1" placeholder="">
+      </div>
+    </p>
+    <p>
+      <div class="ui labeled input">
+        <div class="ui label">
+          <i class="photo icon"></i>
+          Photo
+        </div>
+        <input id="photoUpload" change.delegate="previewImage()" value.bind="photo" type="file" placeholder="Upload or Take Photo">
+      </div>
+    </p>
+    <p if.bind="photoData">
+      <img class="ui small image" src="${photoData}">
+    </p>
+    <p>
+      <button class="ui button" click.delegate="create()" class.bind="photoData && elementId ? '': 'disabled'">
+        <i class="add icon"></i>
+        Add Part On 8brick
+      </button>
+    </p>
+  </div>
+</template>

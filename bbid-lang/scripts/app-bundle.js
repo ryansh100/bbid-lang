@@ -273,13 +273,7 @@ define('panel/index',['exports'], function (exports) {
     Panel.prototype.configureRouter = function configureRouter(config, router) {
       this.router = router;
       config.map([{
-        route: '',
-        name: 'welcome',
-        title: 'Welcome',
-        moduleId: './welcome',
-        nav: true
-      }, {
-        route: ['*path'],
+        route: ['', '*path'],
         name: 'responsive',
         title: 'Matches',
         moduleId: './responsive'
@@ -289,13 +283,21 @@ define('panel/index',['exports'], function (exports) {
     return Panel;
   }();
 });
-define('panel/responsive',['exports', 'storage', 'aurelia-framework', 'encoding'], function (exports, _storage, _aureliaFramework, _encoding) {
+define('panel/responsive',['exports', 'storage', 'aurelia-framework', 'encoding', 'qrious'], function (exports, _storage, _aureliaFramework, _encoding, _qrious) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.Responsive = undefined;
+
+  var _qrious2 = _interopRequireDefault(_qrious);
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -330,6 +332,7 @@ define('panel/responsive',['exports', 'storage', 'aurelia-framework', 'encoding'
       this.storage = storage;
       this.settingsListener = null;
       this.descriptor = {};
+      this.qr = null;
     }
 
     Responsive.prototype.attached = function attached() {
@@ -337,6 +340,11 @@ define('panel/responsive',['exports', 'storage', 'aurelia-framework', 'encoding'
 
       this.settingsListener = this.storage.listen('descriptor', function (change) {
         _this.updateDescriptor(change.doc);
+      });
+
+      this.qr = new _qrious2.default({
+        element: document.getElementById('qr'),
+        value: this.bbid
       });
     };
 
@@ -357,6 +365,7 @@ define('panel/responsive',['exports', 'storage', 'aurelia-framework', 'encoding'
       });
 
       this.descriptor = Object.assign(this.descriptor, doc);
+      this.qr.value = this.bbid;
     };
 
     Responsive.prototype.detached = function detached() {
@@ -454,34 +463,6 @@ define('panel/responsive',['exports', 'storage', 'aurelia-framework', 'encoding'
 
     return Responsive;
   }()) || _class);
-});
-define('panel/welcome',["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Welcome = exports.Welcome = function Welcome() {
-    _classCallCheck(this, Welcome);
-  };
-});
-define('resources/index',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.configure = configure;
-  function configure(config) {
-    config.globalResources(['./elements/descriptor-navigation.html', './value-converters/color', './value-converters/hasValuesFor', './value-converters/hinge']);
-  }
 });
 define('descriptor/assembly',['exports', 'storage', 'aurelia-framework'], function (exports, _storage, _aureliaFramework) {
   'use strict';
@@ -2239,6 +2220,17 @@ define('descriptor/studs',['exports', 'aurelia-framework', 'storage'], function 
     return StudOrientation;
   }();
 });
+define('resources/index',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.configure = configure;
+  function configure(config) {
+    config.globalResources(['./elements/descriptor-navigation.html', './value-converters/color', './value-converters/hasValuesFor', './value-converters/hinge']);
+  }
+});
 define('resources/value-converters/color',['exports', 'colorPalette'], function (exports, _colorPalette) {
   'use strict';
 
@@ -2371,14 +2363,11 @@ define('resources/value-converters/hinge',['exports', 'descriptor/hinge'], funct
     return toHingeTypeValueConverter;
   }();
 });
-define('text!app.css', ['module'], function(module) { module.exports = "@media (max-width: 767px) {\n  .app.mobile > .top {\n    height: 40vh; } }\n\n@media (max-width: 767px) {\n  .app.mobile > .bottom {\n    height: 60vh; } }\n"; });
-define('text!descriptor/index.css', ['module'], function(module) { module.exports = ""; });
 define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"./app.css\"></require><div class=\"app mobile\"><div class=\"top\"><router-view name=\"top\"></router-view></div><div class=\"bottom\"><router-view name=\"bottom\"></router-view></div></div></template>"; });
-define('text!panel/index.html', ['module'], function(module) { module.exports = "<template><router-view></router-view></template>"; });
-define('text!panel/responsive.html', ['module'], function(module) { module.exports = "<template><pre>${bbid}</pre></template>"; });
-define('text!panel/welcome.html', ['module'], function(module) { module.exports = "<template><div class=\"ui text container\"><h1 class=\"ui header\">What is BBID?</h1><p>BBID/Building Blick Identification is a way to semantically describe LEGO parts to find them or catalog them. Rather than having 1-1 names for a part A part is descibed by a collection of attributes such as height, color and studs.</p><p>This opens up the opportunity to systematically order parts by other similar parts.</p></div></template>"; });
 define('text!descriptor/assembly.html', ['module'], function(module) { module.exports = "<template><p>Is this piece an assembly of other pieces?</p><button click.delegate=\"toggleAssembly()\" class=\"ui labeled icon button ${isAssembly ? 'primary': 'basic'}\"><i class=\"toggle ${isAssembly ? 'on' : 'off'} icon\"></i> ${ isAssembly ? 'Yes': 'No'}</button><h3>Examples</h3><descriptor-navigation next-text=\"Studs\" next-route=\"#/studs\"></descriptor-navigation></template>"; });
+define('text!app.css', ['module'], function(module) { module.exports = "@media (max-width: 767px) {\n  .app.mobile > .top {\n    height: 40vh; } }\n\n@media (max-width: 767px) {\n  .app.mobile > .bottom {\n    height: 60vh; } }\n"; });
 define('text!descriptor/axle-sockets.html', ['module'], function(module) { module.exports = "<template><p>Axle Sockets are receivers to pieces with cross axles.</p><p></p><div class=\"ui input labeled fluid\"><div class=\"ui label\">Count</div><input change.delegate=\"updateAxles()\" value.bind=\"axleSockets\" step=\"1\" type=\"number\" placeholder=\"The number of sockets for axles.\"></div><p></p><descriptor-navigation prev-text=\"Clips\" prev-route=\"#/clips\" next-text=\"Axles\" next-route=\"#/axles\"></descriptor-navigation></template>"; });
+define('text!descriptor/index.css', ['module'], function(module) { module.exports = ""; });
 define('text!descriptor/axles.html', ['module'], function(module) { module.exports = "<template><require from=\"./elements/axle-arrangement.html\"></require><h2>Axles</h2><p>Axles are a cross pattern pieces that are a given length. Measurements are rounded to the nearest 8mm's.</p><div class=\"ui top attached segment\" if.bind=\"axle0.show\"><axle-arrangement arrangement.bind=\"axle0\" on-change.bind=\"changeCallback\" index.bind=\"0\"></axle-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"!axle1.show\"><button class=\"ui button item\" click.delegate=\"axle1.toggle()\"><i class=\"icon add\"></i> Add Side</button></div><div class=\"ui attached segment\" if.bind=\"axle1.show\"><axle-arrangement arrangement.bind=\"axle1\" on-change.bind=\"changeCallback\" index.bind=\"1\"></axle-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"!axle2.show && axle1.show\"><button class=\"ui button item\" click.delegate=\"axle2.toggle()\"><i class=\"icon add\"></i> Add Side</button> <button class=\"ui button red item\" click.delegate=\"removeSide(axle1)\"><i class=\"icon remove\"></i> Remove Side</button></div><div class=\"ui attached segment\" if.bind=\"axle2.show\"><axle-arrangement arrangement.bind=\"axle2\" on-change.bind=\"changeCallback\" index.bind=\"2\"></axle-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"!axle3.show && axle2.show\"><button class=\"ui button item\" click.delegate=\"axle3.toggle()\"><i class=\"icon add\"></i> Add Side</button> <button class=\"ui button red item\" click.delegate=\"removeSide(axle2)\"><i class=\"icon remove\"></i> Remove Side</button></div><div class=\"ui attached segment\" if.bind=\"axle3.show\"><axle-arrangement arrangement.bind=\"axle3\" on-change.bind=\"changeCallback\" index.bind=\"3\"></axle-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"axle3.show\"><button class=\"ui button red item\" click.delegate=\"removeSide(axle3)\"><i class=\"icon remove\"></i> Remove Side</button></div><h3>Examples</h3><descriptor-navigation prev-text=\"Axle Sockets\" prev-route=\"#/axle-sockets\" next-text=\"Pins\" next-route=\"#/pins\"></descriptor-navigation></template>"; });
 define('text!descriptor/bars.html', ['module'], function(module) { module.exports = "<template><require from=\"./elements/bar-arrangement.html\"></require><h2>Clip Bars</h2><p>Clips bar features are round bars that a standard clip would connect to.</p><div class=\"ui top attached segment\" if.bind=\"bar0.show\"><bar-arrangement arrangement.bind=\"bar0\" on-change.bind=\"changeCallback\" index.bind=\"0\"></bar-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"!bar1.show\"><button class=\"ui button item\" click.delegate=\"bar1.toggle()\"><i class=\"icon add\"></i> Add Side</button></div><div class=\"ui attached segment\" if.bind=\"bar1.show\"><bar-arrangement arrangement.bind=\"bar1\" on-change.bind=\"changeCallback\" index.bind=\"1\"></bar-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"!bar2.show && bar1.show\"><button class=\"ui button item\" click.delegate=\"bar2.toggle()\"><i class=\"icon add\"></i> Add Side</button> <button class=\"ui button red item\" click.delegate=\"removeSide(bar1)\"><i class=\"icon remove\"></i> Remove Side</button></div><div class=\"ui attached segment\" if.bind=\"bar2.show\"><bar-arrangement arrangement.bind=\"bar2\" on-change.bind=\"changeCallback\" index.bind=\"2\"></bar-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"!bar3.show && bar2.show\"><button class=\"ui button item\" click.delegate=\"bar3.toggle()\"><i class=\"icon add\"></i> Add Side</button> <button class=\"ui button red item\" click.delegate=\"removeSide(bar2)\"><i class=\"icon remove\"></i> Remove Side</button></div><div class=\"ui attached segment\" if.bind=\"bar3.show\"><bar-arrangement arrangement.bind=\"bar3\" on-change.bind=\"changeCallback\" index.bind=\"3\"></bar-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"bar3.show\"><button class=\"ui button red item\" click.delegate=\"removeSide(bar3)\"><i class=\"icon remove\"></i> Remove Side</button></div><descriptor-navigation prev-text=\"Pin Sockets\" prev-route=\"#/pin-sockets\" next-text=\"Bar Sleeves\" next-route=\"#/sleeves\"></descriptor-navigation></template>"; });
 define('text!descriptor/clips.html', ['module'], function(module) { module.exports = "<template><require from=\"./elements/clip-arrangement.html\"></require><h2>Clips</h2><p>Clips can hold onto the standard width bar used for many minifigure utensils.</p><div class=\"ui top attached segment\" if.bind=\"clip0.show\"><clip-arrangement arrangement.bind=\"clip0\" on-change.bind=\"changeCallback\" index.bind=\"0\"></clip-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"!clip1.show\"><button class=\"ui button item\" click.delegate=\"clip1.toggle()\"><i class=\"icon add\"></i> Add Side</button></div><div class=\"ui attached segment\" if.bind=\"clip1.show\"><clip-arrangement arrangement.bind=\"clip1\" on-change.bind=\"changeCallback\" index.bind=\"1\"></clip-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"!clip2.show && clip1.show\"><button class=\"ui button item\" click.delegate=\"clip2.toggle()\"><i class=\"icon add\"></i> Add Side</button> <button class=\"ui button red item\" click.delegate=\"removeSide(clip1)\"><i class=\"icon remove\"></i> Remove Side</button></div><div class=\"ui attached segment\" if.bind=\"clip2.show\"><clip-arrangement arrangement.bind=\"clip2\" on-change.bind=\"changeCallback\" index.bind=\"2\"></clip-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"!clip3.show && clip2.show\"><button class=\"ui button item\" click.delegate=\"clip3.toggle()\"><i class=\"icon add\"></i> Add Side</button> <button class=\"ui button red item\" click.delegate=\"removeSide(clip2)\"><i class=\"icon remove\"></i> Remove Side</button></div><div class=\"ui attached segment\" if.bind=\"clip3.show\"><clip-arrangement arrangement.bind=\"clip3\" on-change.bind=\"changeCallback\" index.bind=\"3\"></clip-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"clip3.show\"><button class=\"ui button red item\" click.delegate=\"removeSide(clip3)\"><i class=\"icon remove\"></i> Remove Side</button></div><descriptor-navigation prev-text=\"Sockets\" prev-route=\"#/sockets\" next-text=\"Axle Sockets\" next-route=\"#/axle-sockets\"></descriptor-navigation></template>"; });
@@ -2395,7 +2384,8 @@ define('text!descriptor/sleeves.html', ['module'], function(module) { module.exp
 define('text!descriptor/sockets.html', ['module'], function(module) { module.exports = "<template><require from=\"./elements/socket-arrangement.html\"></require><h2>Stud Sockets</h2><p>Stud sockets are the receiving part of a building block that connect with normal studs.</p><div class=\"ui top attached segment\" if.bind=\"socket0.show\"><socket-arrangement arrangement.bind=\"socket0\" index.bind=\"0\" on-change.bind=\"changeCallback\"></socket-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"!socket1.show\"><button class=\"ui button item\" click.delegate=\"socket1.toggle()\"><i class=\"icon add\"></i> Add Side</button></div><div class=\"ui attached segment\" if.bind=\"socket1.show\"><socket-arrangement arrangement.bind=\"socket1\" index.bind=\"1\" on-change.bind=\"changeCallback\"></socket-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"!socket2.show && socket1.show\"><button class=\"ui button item\" click.delegate=\"socket2.toggle()\"><i class=\"icon add\"></i> Add Side</button> <button class=\"ui button red item\" click.delegate=\"removeSide(socket1)\"><i class=\"icon remove\"></i> Remove Side</button></div><div class=\"ui attached segment\" if.bind=\"socket2.show\"><socket-arrangement arrangement.bind=\"socket2\" index.bind=\"2\" on-change.bind=\"changeCallback\"></socket-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"!socket3.show && socket2.show\"><button class=\"ui button item\" click.delegate=\"socket3.toggle()\"><i class=\"icon add\"></i> Add Side</button> <button class=\"ui button red item\" click.delegate=\"removeSide(socket2)\"><i class=\"icon remove\"></i> Remove Side</button></div><div class=\"ui attached segment\" if.bind=\"socket3.show\"><socket-arrangement arrangement.bind=\"socket3\" index.bind=\"3\" on-change.bind=\"changeCallback\"></socket-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"!socket4.show && socket3.show\"><button class=\"ui button item\" click.delegate=\"socket4.toggle()\"><i class=\"icon add\"></i> Add Side</button> <button class=\"ui button red item\" click.delegate=\"removeSide(socket3)\"><i class=\"icon remove\"></i> Remove Side</button></div><div class=\"ui attached segment\" if.bind=\"socket4.show\"><socket-arrangement arrangement.bind=\"socket4\" index.bind=\"4\" on-change.bind=\"changeCallback\"></socket-arrangement></div><div class=\"ui bottom attached menu\" if.bind=\"socket4.show\"><button class=\"ui button red item\" click.delegate=\"removeSide(socket4)\"><i class=\"icon remove\"></i> Remove Side</button></div><descriptor-navigation prev-text=\"Hinges\" prev-route=\"#/hinge\" next-text=\"Clips\" next-route=\"#/clips\"></descriptor-navigation></template>"; });
 define('text!descriptor/sticker.html', ['module'], function(module) { module.exports = "<template><h2>Sticker</h2><p>Represents the size of any stickers in mm.</p><p></p><div class=\"ui right labeled fluid input\"><div class=\"ui label\">Min</div><input value.bind=\"stickerMinMm\" step=\"2\" type=\"number\" placeholder=\"A minimum measurement to nearest 2mm.\"><div class=\"ui basic label\">mm</div></div><p></p><p></p><div class=\"ui right labeled fluid input\"><div class=\"ui label\">Max</div><input value.bind=\"stickerMaxMm\" step=\"2\" type=\"number\" placeholder=\"A maximum measurement to nearest 2mm.\"><div class=\"ui basic label\">mm</div></div><p></p><h3>Example</h3><p></p><descriptor-navigation next-text=\"Colors\" next-route=\"#/colors\" prev-text=\"Printed\" prev-route=\"#/printed\"></descriptor-navigation></template>"; });
 define('text!descriptor/studs.html', ['module'], function(module) { module.exports = "<template><require from=\"./elements/stud-face.html\"></require><h2>Studs</h2><p>Studs are the round knobs that are commonly found on a building block's top.</p><div class=\"ui top attached segment\" if.bind=\"orientation0.show\"><stud-face orientation.bind=\"orientation0\" index.bind=\"0\" on-change.bind=\"changeCallback\"></stud-face></div><div class=\"ui bottom attached menu\" if.bind=\"!orientation1.show\"><button class=\"ui button item\" click.delegate=\"orientation1.toggle()\"><i class=\"icon add\"></i> Add Side</button></div><div class=\"ui attached segment\" if.bind=\"orientation1.show\"><stud-face orientation.bind=\"orientation1\" index.bind=\"1\" on-change.bind=\"changeCallback\"></stud-face></div><div class=\"ui bottom attached menu\" if.bind=\"!orientation2.show && orientation1.show\"><button class=\"ui button item\" click.delegate=\"orientation2.toggle()\"><i class=\"icon add\"></i> Add Side</button> <button class=\"ui button red item\" click.delegate=\"removeOrientation(orientation1)\"><i class=\"icon remove\"></i> Remove Side</button></div><div class=\"ui attached segment\" if.bind=\"orientation2.show\"><stud-face orientation.bind=\"orientation2\" index.bind=\"2\" on-change.bind=\"changeCallback\"></stud-face></div><div class=\"ui bottom attached menu\" if.bind=\"!orientation3.show && orientation2.show\"><button class=\"ui button item\" click.delegate=\"orientation3.toggle()\"><i class=\"icon add\"></i> Add Side</button> <button class=\"ui button red item\" click.delegate=\"removeOrientation(orientation2)\"><i class=\"icon remove\"></i> Remove Side</button></div><div class=\"ui attached segment\" if.bind=\"orientation3.show\"><stud-face orientation.bind=\"orientation3\" index.bind=\"3\" on-change.bind=\"changeCallback\"></stud-face></div><div class=\"ui bottom attached menu\" if.bind=\"!orientation4.show && orientation3.show\"><button class=\"ui button item\" click.delegate=\"orientation4.toggle()\"><i class=\"icon add\"></i> Add Side</button> <button class=\"ui button red item\" click.delegate=\"removeOrientation(orientation3)\"><i class=\"icon remove\"></i> Remove Side</button></div><div class=\"ui attached segment\" if.bind=\"orientation4.show\"><stud-face orientation.bind=\"orientation4\" index.bind=\"4\" on-change.bind=\"changeCallback\"></stud-face></div><div class=\"ui bottom attached menu\" if.bind=\"orientation4.show\"><button class=\"ui button red item\" click.delegate=\"removeOrientation(orientation4)\"><i class=\"icon remove\"></i> Remove Side</button></div><descriptor-navigation prev-text=\"Assembly\" prev-route=\"#/assembly\" next-text=\"Height\" next-route=\"#/height\"></descriptor-navigation></template>"; });
-define('text!resources/elements/descriptor-navigation.html', ['module'], function(module) { module.exports = "<template bindable=\"prevText,prevRoute,nextText,nextRoute\"><div class=\"ui divider\"></div><div class=\"ui secondary menu\"><div class=\"item\" if.bind=\"prevText\"><a href=\"${prevRoute}\" class=\"ui left labeled icon button\"><i class=\"left arrow icon\"></i> ${prevText}</a></div><div class=\"right menu\"><div class=\"item\" if.bind=\"nextText\"><a href=\"${nextRoute}\" class=\"ui right labeled icon button\"><i class=\"right arrow icon\"></i> ${nextText}</a></div></div></div></template>"; });
+define('text!panel/index.html', ['module'], function(module) { module.exports = "<template><router-view></router-view></template>"; });
+define('text!panel/responsive.html', ['module'], function(module) { module.exports = "<template><div class=\"ui text container\" if.bind=\"bbid == '0-----------------.-------------------------------------------------------'\"><h1 class=\"ui header\">What is BBID?</h1><p>BBID/Building Blick Identification is a way to semantically describe LEGO parts to find them or catalog them. Rather than having 1-1 names for a part A part is descibed by a collection of attributes such as height, color and studs.</p><p>This opens up the opportunity to systematically order parts by other similar parts.</p></div><div if.bind=\"bbid != '0-----------------.-------------------------------------------------------'\"><pre>${bbid}</pre><canvas id=\"qr\"></canvas></div></template>"; });
 define('text!descriptor/elements/axle-arrangement.html', ['module'], function(module) { module.exports = "<template bindable=\"arrangement, index, onChange\"><h3>Side ${index+1}</h3><p></p><div class=\"ui input right labeled fluid\"><div class=\"ui label\">Length</div><input change.delegate=\"onChange()\" value.bind=\"arrangement.lengthMm\" step=\"8\" type=\"number\" placeholder=\"The length of a each axle.\"><div class=\"ui basic label\">mm</div></div><p></p></template>"; });
 define('text!descriptor/elements/bar-arrangement.html', ['module'], function(module) { module.exports = "<template bindable=\"arrangement, index, onChange\"><h3>Side ${index+1}</h3><p></p><div class=\"ui input labeled fluid\"><div class=\"ui label\">Count</div><input change.delegate=\"onChange()\" value.bind=\"arrangement.count\" step=\"1\" type=\"number\" placeholder=\"The number of bars on the side.\"></div><p></p></template>"; });
 define('text!descriptor/elements/clip-arrangement.html', ['module'], function(module) { module.exports = "<template bindable=\"arrangement, index, onChange\"><h3>Side ${index+1}</h3><p></p><div class=\"ui input labeled fluid\"><div class=\"ui label\">Count</div><input change.delegate=\"onChange()\" value.bind=\"arrangement.count\" step=\"1\" type=\"number\" placeholder=\"The number of clips on the side.\"></div><p></p></template>"; });
@@ -2406,4 +2396,5 @@ define('text!descriptor/elements/pin-socket-arrangement.html', ['module'], funct
 define('text!descriptor/elements/sleeve-arrangement.html', ['module'], function(module) { module.exports = "<template bindable=\"arrangement, index, onChange\"><h3>Side ${index+1}</h3><p></p><div class=\"ui input labeled fluid\"><div class=\"ui label\">Count</div><input change.delegate=\"onChange()\" value.bind=\"arrangement.count\" step=\"1\" type=\"number\" placeholder=\"The number of bar sleeves on the side.\"></div><p></p></template>"; });
 define('text!descriptor/elements/socket-arrangement.html', ['module'], function(module) { module.exports = "<template bindable=\"arrangement,index,onChange\"><h3>Side ${index+1}</h3><p></p><div class=\"ui input labeled fluid\"><div class=\"ui label\">Max</div><input change.delegate=\"onChange()\" value.bind=\"arrangement.max\" step=\"1\" type=\"number\" placeholder=\"The maximum number of stud sockets in a single row.\"></div><p></p><p></p><div class=\"ui input labeled fluid\"><div class=\"ui label\">Min</div><input change.delegate=\"onChange()\" value.bind=\"arrangement.min\" step=\"1\" type=\"number\" placeholder=\"The maximum number of stud sockets in a single row.\"></div><p></p><p></p><div class=\"ui input labeled fluid\"><div class=\"ui label\">Total</div><input change.delegate=\"onChange()\" value.bind=\"arrangement.total\" step=\"1\" type=\"number\" placeholder=\"Total number of stud sockets on a side.\"></div><p></p></template>"; });
 define('text!descriptor/elements/stud-face.html', ['module'], function(module) { module.exports = "<template bindable=\"orientation,index,onChange\"><h3>Side ${index+1}</h3><p></p><div class=\"ui input labeled fluid\"><div class=\"ui label\">Max</div><input change.delegate=\"onChange()\" value.bind=\"orientation.max\" step=\"1\" type=\"number\" placeholder=\"The maximum number of studs in a single row.\"></div><p></p><p></p><div class=\"ui input labeled fluid\"><div class=\"ui label\">Min</div><input change.delegate=\"onChange()\" value.bind=\"orientation.min\" step=\"1\" type=\"number\" placeholder=\"The maximum number of studs in a single row.\"></div><p></p><p></p><div class=\"ui input labeled fluid\"><div class=\"ui label\">Total</div><input change.delegate=\"onChange()\" value.bind=\"orientation.total\" step=\"1\" type=\"number\" placeholder=\"Total number of studs on a face.\"></div><p></p></template>"; });
+define('text!resources/elements/descriptor-navigation.html', ['module'], function(module) { module.exports = "<template bindable=\"prevText,prevRoute,nextText,nextRoute\"><div class=\"ui divider\"></div><div class=\"ui secondary menu\"><div class=\"item\" if.bind=\"prevText\"><a href=\"${prevRoute}\" class=\"ui left labeled icon button\"><i class=\"left arrow icon\"></i> ${prevText}</a></div><div class=\"right menu\"><div class=\"item\" if.bind=\"nextText\"><a href=\"${nextRoute}\" class=\"ui right labeled icon button\"><i class=\"right arrow icon\"></i> ${nextText}</a></div></div></div></template>"; });
 //# sourceMappingURL=app-bundle.js.map

@@ -3,14 +3,7 @@ export class Panel {
     this.router = router;
     config.map([
       {
-        route:      '',
-        name:       'welcome',
-        title:      'Welcome',
-        moduleId:   './welcome',
-        nav:        true
-      },
-      {
-        route:      ['*path'],
+        route:      ['', '*path'],
         name:       'responsive',
         title:      'Matches',
         moduleId:   './responsive'

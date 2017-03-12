@@ -49,6 +49,7 @@
     "karma-jasmine": "^1.0.2",
     "minimatch": "^3.0.2",
     "pouchdb": "^6.1.2",
+    "qrious": "^2.2.0",
     "radix-64": "^1.0.4",
     "semantic-ui": "^2.2.7",
     "through2": "^2.0.1",

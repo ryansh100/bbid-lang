@@ -92,7 +92,8 @@
         "prepend": [
           "node_modules/bluebird/js/browser/bluebird.core.js",
           "node_modules/aurelia-cli/lib/resources/scripts/configure-bluebird.js",
-          "node_modules/requirejs/require.js"
+          "node_modules/requirejs/require.js",
+          "node_modules/qrious/dist/umd/qrious.js"
         ],
         "dependencies": [
           "aurelia-binding",

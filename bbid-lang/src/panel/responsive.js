@@ -1,6 +1,7 @@
 import {Storage} from 'storage';
 import {inject} from 'aurelia-framework';
 import {Encode} from 'encoding';
+import QRious from 'qrious';
 
 @inject(Storage)
 export class Responsive {
@@ -8,6 +9,7 @@ export class Responsive {
     this.storage = storage;
     this.settingsListener = null;
     this.descriptor = {};
+    this.qr = null;
   }
 
   get bbid() {
@@ -113,6 +115,11 @@ export class Responsive {
 
   attached() {
     this.settingsListener = this.storage.listen('descriptor', (change) => { this.updateDescriptor(change.doc) });
+
+    this.qr = new QRious({
+      element: document.getElementById('qr'),
+      value: this.bbid
+    });
   }
 
   activate(){
@@ -129,6 +136,7 @@ export class Responsive {
     })
 
     this.descriptor = Object.assign(this.descriptor, doc);
+    this.qr.value = this.bbid;
   }
 
   detached() {

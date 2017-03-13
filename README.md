@@ -52,3 +52,10 @@ This might seem like overkill, but how do you systematically describe elements t
 | - Sticker/Max        | Maximum measurement in 2mm increments                                            | Radix64[1]  | -               |
 | Printed              | Whether or not the part is printed on                                            | Radix64[1]  | -               |
 | Modifier             | Unique Modifier to the part                                                      | Radix64{1,3}| -..             |
+
+
+## Demo Site
+
+The following site illustrates the usage of BBID system to generate codes.
+
+[https://ryansh100.github.io/bbid-lang/](https://ryansh100.github.io/bbid-lang/)
